@@ -2,6 +2,7 @@
 
 namespace FullscreenInteractive\KeyValueField;
 
+use SilverStripe\Core\Convert;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LabelField;
@@ -32,6 +33,12 @@ class KeyValueField extends CompositeField
         $this->buildChildren();
 
         return $this;
+    }
+
+
+    public function HolderID()
+    {
+        return Convert::raw2att($this->Name);
     }
 
 
