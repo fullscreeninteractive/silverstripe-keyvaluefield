@@ -72,4 +72,10 @@ class EditableKeyValueField extends EditableFormField
             return trim($k);
         }, explode(PHP_EOL, $this->Keys));
     }
+
+
+    public function getSubmittedFormField()
+    {
+        return SubmittedKeyValueFormField::create();
+    }
 }
