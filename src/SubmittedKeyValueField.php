@@ -9,7 +9,6 @@ class SubmittedKeyValueFormField extends SubmittedFormField
 {
     private static $table_name = 'SubmittedKeyValueFormField';
 
-
     public function getFormattedValue()
     {
         $data = json_decode($this->Value, true);

@@ -48,17 +48,14 @@ class EditableKeyValueField extends EditableFormField
 
     public function getValueFromData($data)
     {
-        $incoming = isset($data[$this->Name]) ? $data[$this->Name] : false;
-
-        if (!$incoming) {
-            return json_encode([]);
-        }
-
+        $incoming = isset($data[$this->Name]) ? $data[$this->Name] : [];
         $value = [];
 
         foreach ($this->getKeysAsArray() as $i => $k) {
-            if (isset($data[$i])) {
-                $value[$k] = $data[$i];
+            if (isset($incoming[$i])) {
+                $value[$k] = $incoming[$i];
+            } else {
+                $value[$k] = '';
             }
         }
 
