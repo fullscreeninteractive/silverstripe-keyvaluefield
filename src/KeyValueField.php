@@ -3,6 +3,7 @@
 namespace FullscreenInteractive\KeyValueField;
 
 use SilverStripe\Core\Convert;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LabelField;
@@ -15,6 +16,16 @@ class KeyValueField extends CompositeField
      * @var string[]
      */
     protected $keys = 0;
+
+    /**
+     * @var string
+     */
+    protected $fieldClass = TextField::class;
+
+    /**
+     * @var ?callable
+     */
+    protected $fieldCallback = null;
 
 
     public function __construct($name, $title = null, $value = null)
@@ -42,6 +53,28 @@ class KeyValueField extends CompositeField
     }
 
 
+    /**
+     * Set the class to use for the value fields.
+     */
+    public function setValueFieldClass(string $class)
+    {
+        $this->fieldClass = $class;
+
+        return $this;
+    }
+
+
+    /**
+     * Set a callback to be called on each field.
+     */
+    public function setFieldCallback(callable $callback)
+    {
+        $this->fieldCallback = $callback;
+
+        return $this;
+    }
+
+
     public function buildChildren()
     {
         $children = new FieldList();
@@ -54,8 +87,14 @@ class KeyValueField extends CompositeField
                 $fieldName = sprintf("%s[%s]", $name, $i);
                 $value = isset($this->value[$i]) ? $this->value[$i] : '';
 
-                $field = TextField::create($fieldName, $key, $value)
+                $field = Injector::inst()->create($this->fieldClass, $fieldName, $key, $value)
                     ->addExtraClass('key__value');
+
+                if (is_callable($this->fieldCallback)) {
+                    // call fieldCallback
+                    ($this->fieldCallback)($field);
+                }
+
                 $this->invokeWithExtensions('updateKeyValueField', $field, $key, $i);
 
                 $children->push($field);

@@ -2,7 +2,9 @@
 
 namespace FullscreenInteractive\KeyValueField;
 
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\UserForms\Model\EditableFormField;
 
@@ -17,7 +19,8 @@ class EditableKeyValueField extends EditableFormField
     private static $plural_name = 'Key Value Fields';
 
     private static $db = [
-        'Keys' => 'Text'
+        'Keys' => 'Text',
+        'IsNumeric' => 'Boolean',
     ];
 
     private static $table_name = 'EditableKeyValueField';
@@ -29,6 +32,7 @@ class EditableKeyValueField extends EditableFormField
     {
         $this->beforeUpdateCMSFields(function (FieldList $fields) {
             $fields->addFieldsToTab('Root.Main', TextareaField::create('Keys')->setDescription('One key per line'));
+            $fields->addFieldsToTab('Root.Main', CheckboxField::create('IsNumeric', 'Validate field values as numeric values?')->setDescription('Validates that all the values are numeric'));
         });
 
         return parent::getCMSFields();
@@ -37,8 +41,16 @@ class EditableKeyValueField extends EditableFormField
 
     public function getFormField()
     {
-        $field = KeyValueField::create($this->Name, $this->Title ?: false)
-            ->setKeys($this->getKeysAsArray());
+        $field = KeyValueField::create($this->Name, $this->Title ?: false);
+
+        if ($this->IsNumeric) {
+            $field->setValueFieldClass(NumericField::class);
+            $field->setFieldCallback(function ($field) {
+                $field->setHTML5(true);
+            });
+        }
+
+        $field->setKeys($this->getKeysAsArray());
 
         $this->doUpdateFormField($field);
 
