@@ -9,13 +9,14 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LabelField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataObjectInterface;
+use SilverStripe\View\ViewableData;
 
 class KeyValueField extends CompositeField
 {
     /**
      * @var string[]
      */
-    protected $keys = 0;
+    protected $keys = [];
 
     /**
      * @var string
@@ -77,7 +78,7 @@ class KeyValueField extends CompositeField
 
     public function buildChildren()
     {
-        $children = new FieldList();
+        $children = FieldList::create();
 
         $name = $this->name;
         $children->push(LabelField::create($this->name . '__label', $this->title)->addExtraClass('left key__label'));
@@ -110,8 +111,9 @@ class KeyValueField extends CompositeField
 
     public function saveInto(DataObjectInterface $record)
     {
-        if ($record->hasMethod('set{$this->name}')) {
-            $record->{'set' . $this->name}($this->dataValue());
+        $setter = 'set' . $this->name;
+        if ($record instanceof ViewableData && $record->hasMethod($setter)) {
+            $record->$setter($this->dataValue());
         } else {
             $record->{$this->name} = $this->dataValue();
         }
@@ -128,9 +130,9 @@ class KeyValueField extends CompositeField
      */
     public function dataValue()
     {
-        if ($this->value && is_array($this->value)) {
-            $output = [];
+        $output = [];
 
+        if ($this->value && is_array($this->value)) {
             foreach ($this->keys as $i => $key) {
                 if (isset($this->value[$i])) {
                     $output[$key] = $this->value[$i];

@@ -77,7 +77,7 @@ class EditableKeyValueField extends EditableFormField
 
     public function getKeysAsArray()
     {
-        return array_map(function($k) {
+        return array_map(function ($k) {
             return trim($k);
         }, explode(PHP_EOL, $this->Keys));
     }
