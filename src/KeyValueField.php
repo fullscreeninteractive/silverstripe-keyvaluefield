@@ -8,8 +8,8 @@ use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LabelField;
 use SilverStripe\Forms\TextField;
+use SilverStripe\Model\ModelData;
 use SilverStripe\ORM\DataObjectInterface;
-use SilverStripe\View\ViewableData;
 
 class KeyValueField extends CompositeField
 {
@@ -112,7 +112,7 @@ class KeyValueField extends CompositeField
     public function saveInto(DataObjectInterface $record)
     {
         $setter = 'set' . $this->name;
-        if ($record instanceof ViewableData && $record->hasMethod($setter)) {
+        if ($record instanceof ModelData && $record->hasMethod($setter)) {
             $record->$setter($this->dataValue());
         } else {
             $record->{$this->name} = $this->dataValue();

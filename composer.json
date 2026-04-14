@@ -13,12 +13,12 @@
         "homepage": "http://www.fullscreen.io"
     }],
     "require": {
-        "php": "^8.1",
-        "silverstripe/framework": "^5",
-        "silverstripe/vendor-plugin": "^2"
+        "php": "^8.3",
+        "silverstripe/framework": "^6",
+        "silverstripe/vendor-plugin": "^3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.6",
+        "phpunit/phpunit": "^11.3",
         "squizlabs/php_codesniffer": "^3",
         "silverstripe/standards": "^1",
         "phpstan/extension-installer": "^1.3",
@@ -26,7 +26,7 @@
         "cambis/silverstan": "^2.1"
     },
     "suggest": {
-        "silverstripe/userforms": "Adds EditableKeyValueField and submitted value display for user-defined forms"
+        "silverstripe/userforms": "Adds EditableKeyValueField and submitted value display; use silverstripe/userforms ^7 with Silverstripe 6."
     },
     "autoload": {
         "psr-4": {
