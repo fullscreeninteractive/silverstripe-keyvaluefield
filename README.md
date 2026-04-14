@@ -2,6 +2,7 @@
 
 [![Version](http://img.shields.io/packagist/v/fullscreeninteractive/silverstripe-keyvaluefield.svg)](https://packagist.org/packages/fullscreeninteractive/silverstripe-keyvaluefield)
 [![License](http://img.shields.io/packagist/l/fullscreeninteractive/silverstripe-keyvaluefield.svg)](LICENCE.md)
+[![CI](https://github.com/fullscreeninteractive/silverstripe-keyvaluefield/actions/workflows/ci.yml/badge.svg)](https://github.com/fullscreeninteractive/silverstripe-keyvaluefield/actions/workflows/ci.yml)
 
 A reusable approach to a form field which extends a simple Text field to have
 several named parts (keys). This module also supports User Defined Forms.
