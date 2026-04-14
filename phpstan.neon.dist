@@ -1,0 +1,11 @@
+# silverstripe/standards and cambis/silverstan are loaded via phpstan/extension-installer.
+parameters:
+    level: 3
+    paths:
+        - src
+        - tests/php
+    customRulesetUsed: false
+    # Optional UserForms integration: analysed only when userforms is installed (not a root dev dependency).
+    excludePaths:
+        - src/EditableKeyValueField.php
+        - src/SubmittedKeyValueFormField.php

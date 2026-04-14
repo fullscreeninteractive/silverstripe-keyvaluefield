@@ -43,7 +43,9 @@
         "lint:phpcs": "phpcs",
         "phpstan": "@lint:phpstan",
         "phpcs": "@lint:phpcs",
-        "phpcbf": "phpcbf"
+        "phpcbf": "phpcbf",
+        "test": "phpunit",
+        "test:coverage": "phpunit --coverage-html coverage"
     },
     "extra": {
         "expose": [
